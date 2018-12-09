@@ -1,0 +1,13 @@
+import java.util.Arrays;
+
+public class Sort {
+    public static void main(String[] args) {
+        int[] id = {1, 4, 2, 6, 3};
+        String[] student = {"Elov", "Brud", "Ulon","Oleg","Irina"};
+        Arrays.sort(id);
+        Arrays.sort(student);
+
+        System.out.println(Arrays.toString(id));
+        System.out.println(Arrays.toString(student));
+    }
+}
