@@ -1,0 +1,255 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        int i = 5;
+        TableOrdersManager tableOrdersManager = new TableOrdersManager();
+        BarCounter barCounter = new BarCounter();
+        InternetOrdersManager internetOrdersManager = new InternetOrdersManager();
+        Scanner scanner= new Scanner(System.in);
+
+        for (;i != 0;) {
+            System.out.println("Где вы будете есть?" +
+                    '\n' + "1)за столиком" +
+                    '\n' + "2)я пришел выпить пару бутылок виски"+
+                    '\n' + "3)на доставку");
+
+            i = scanner.nextInt();
+            switch (i) {
+                case 1:
+                    System.out.println(tableOrdersManager.table());
+                    tableOrdersManager.tableOrder();
+                    break;
+                case 2:
+                    System.out.println(barCounter.chair());
+                    barCounter.chairOrder();
+                    break;
+                case 3:
+                    System.out.println("Введите ваш адрес");
+                    internetOrdersManager.delivery();
+                    internetOrdersManager.internetOrder();
+                    break;
+                 default:
+                     System.out.println("error");
+            }
+        }
+    }
+}
+
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class TableOrdersManager {
+    public int table() {
+        HashMap<Integer, Boolean> freeTabble = new HashMap<>(10);
+        int numTabble = 0;
+        freeTabble.put(1, true);
+        freeTabble.put(2, true);
+        freeTabble.put(3, true);
+        freeTabble.put(4, true);
+        freeTabble.put(5, true);
+        freeTabble.put(6, true);
+        freeTabble.put(7, true);
+        freeTabble.put(8, true);
+        freeTabble.put(9, true);
+        freeTabble.put(10, true);
+
+        for (Map.Entry entry : freeTabble.entrySet()) {
+            if (entry.getValue().equals(true)) {
+                numTabble = (Integer) entry.getKey();
+            }
+        }
+        return  numTabble;
+    }
+    public void tableOrder(){
+        OrdersManager ordersManager = new OrdersManager();
+        ordersManager.orders();
+    }
+}
+
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class BarCounter {
+    public int chair(){
+        HashMap<Integer,Boolean> freeChair = new HashMap<>(10);
+        int numChair = 0;
+        freeChair.put(1,true);
+        freeChair.put(2,true);
+        freeChair.put(3,true);
+        freeChair.put(4,true);
+        freeChair.put(5,true);
+        freeChair.put(6,true);
+        freeChair.put(7,true);
+        freeChair.put(8,true);
+        freeChair.put(9,true);
+        freeChair.put(10,true);
+        for (Map.Entry entry : freeChair.entrySet()) {
+            if (entry.getValue().equals(true)) {
+                numChair = (Integer) entry.getKey();
+                freeChair.put(numChair, false);
+                break;
+            }
+        }
+        return numChair;
+    }
+    public void chairOrder(){
+        OrdersManager ordersManager = new OrdersManager();
+        ordersManager.orders();
+    }
+}
+
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class InternetOrdersManager {
+    public void delivery(){
+        ArrayList<String> internetList = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+        internetList.add(scanner.next());
+    }
+    public void internetOrder(){
+        OrdersManager ordersManager = new OrdersManager();
+        ordersManager.orders();
+    }
+}
+
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+public class OrdersManager {
+    public void orders(){
+        int sum = 0;
+        String input ="0";
+        int schet = 0;
+
+        Drink drink = new Drink();
+        Dish dish = new Dish();
+        ArrayList<String> ordersList = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите заказ: ");
+        //while (input != ""){
+
+      //  }
+        for (boolean b = true; b != false;) {
+            input = scanner.nextLine();
+            switch (input) {
+                case "нет":
+                    System.out.println("Ваш номер заказа: " + schet);
+                    System.out.println("Спасибо за заказ, итговая сумма : " + sum);
+                    b = false;
+                    schet ++;
+                    break;
+                default:
+                    sum += drink.priceReturn(input);
+                    sum += dish.priceReturn(input);
+                    ordersList.add(schet, input + " ");
+                    System.out.println("Что нибудь еще?");
+
+            }
+        }
+    }
+}
+
+
+import java.util.HashMap;
+import java.util.Map;
+
+public final class Drink {
+    int price;
+    String name;
+    Map<String,Integer> drinkList = new HashMap<String, Integer>();
+    Map<String,Integer> alcoholList = new HashMap<>();
+
+   public int priceReturn(String name){
+        drinkList.put("Черныйчай",180);
+        drinkList.put("Чайсмаракуйейиимбирем",420);
+        drinkList.put("Ананасовыйчайсклубникой",390);
+        drinkList.put("Брусничныйчайсцитрусом",420);
+        drinkList.put("Имбирныйчайсоблепихой",420);
+        drinkList.put("Яблочныйчай",380);
+        drinkList.put("Эспрессо",150);
+        drinkList.put("Американо",150);
+        drinkList.put("Капучино",220);
+        drinkList.put("Латте",220);
+        drinkList.put("Гляссе",240);
+        drinkList.put("Рафкофе",290);
+        drinkList.put("Горячийшоколад",180);
+        drinkList.put("Какао",150);
+        drinkList.put("Фанта",120);
+        drinkList.put("Кола",120);
+        drinkList.put("Спрайт",120);
+        alcoholList.put("Игристоевино",540);
+        alcoholList.put("Белоевино",520);
+        alcoholList.put("Красноевино",360);
+        alcoholList.put("Розовоевино",580);
+        alcoholList.put("ВискиШотландия",680);
+        alcoholList.put("ВискиИрландия",350);
+        alcoholList.put("ВискиЯпония",1100);
+        alcoholList.put("Коньяк",1450);
+        alcoholList.put("Портвейн",490);
+        alcoholList.put("Херес",690);
+        price = 0;
+
+        for (Map.Entry entry:drinkList.entrySet()) {
+           if (name.equals(entry.getKey())){
+               price = (Integer)entry.getValue();
+               break;
+           }
+        }
+        if (price == 0){
+            for (Map.Entry entry:alcoholList.entrySet()) {
+                if (name.equals(entry.getKey())){
+                    price = (Integer)entry.getValue();
+                    break;
+                }
+            }
+        }
+        return price;
+    }
+}
+
+
+import java.util.HashMap;
+import java.util.Map;
+
+public final class Dish{
+    int price;
+    Map<String,Integer> dishList = new HashMap<String, Integer>();
+
+    public int priceReturn(String name){
+        dishList.put("Салатгреческий",480);
+        dishList.put("Салатоливье",650);
+        dishList.put("Салатцезарь",700);
+        dishList.put("Креветкивасаби",750);
+        dishList.put("Шаурма",580);
+        dishList.put("Супборщ",380);
+        dishList.put("Супщи",350);
+        dishList.put("Спагеттикарбонара",750);
+        dishList.put("Спагеттипомилански",680);
+        dishList.put("Бургерсговядиной",580);
+        dishList.put("Филекурицы",650);
+        dishList.put("Котлетаизкабана",750);
+        dishList.put("Бургерскрабом",1450);
+        dishList.put("Филеговядины",1350);
+        dishList.put("Тунец",1150);
+        dishList.put("Стейкизлосося",590);
+        dishList.put("Креветки",850);
+        price = 0;
+        for (Map.Entry entry:dishList.entrySet()) {
+            if (name.equals(entry.getKey())){
+                price = (Integer)entry.getValue();
+                break;
+            }
+        }
+        return price;
+
+    }
+
+
+}
